@@ -12,13 +12,13 @@ describe('Themes', function () {
     describe('List', function () {
         beforeEach(function () {
             themeList.init({
-                casper-valley: {foo: 'bar'},
-                'not-casper-valley': {bar: 'baz'}
+                aquarius: {foo: 'bar'},
+                'not-aquarius': {bar: 'baz'}
             });
         });
 
         it('get() allows getting a single theme', function () {
-            themeList.get('casper-valley').should.eql({foo: 'bar'});
+            themeList.get('aquarius').should.eql({foo: 'bar'});
         });
 
         it('get() with no args should do nothing', function () {
@@ -26,16 +26,16 @@ describe('Themes', function () {
         });
 
         it('getAll() returns all themes', function () {
-            themeList.getAll().should.be.an.Object().with.properties('casper-valley', 'not-casper-valley');
+            themeList.getAll().should.be.an.Object().with.properties('aquarius', 'not-aquarius');
             Object.keys(themeList.getAll()).should.have.length(2);
         });
 
         it('set() updates an existing theme', function () {
-            var origcasper-valley = _.cloneDeep(themeList.get('casper-valley'));
-            themeList.set('casper-valley', {magic: 'update'});
+            var origaquarius = _.cloneDeep(themeList.get('aquarius'));
+            themeList.set('aquarius', {magic: 'update'});
 
-            themeList.get('casper-valley').should.not.eql(origcasper-valley);
-            themeList.get('casper-valley').should.eql({magic: 'update'});
+            themeList.get('aquarius').should.not.eql(origaquarius);
+            themeList.get('aquarius').should.eql({magic: 'update'});
         });
 
         it('set() can add a new theme', function () {
@@ -44,28 +44,28 @@ describe('Themes', function () {
         });
 
         it('del() removes a key from the list', function () {
-            should.exist(themeList.get('casper-valley'));
-            should.exist(themeList.get('not-casper-valley'));
-            themeList.del('casper-valley');
-            should.not.exist(themeList.get('casper-valley'));
-            should.exist(themeList.get('not-casper-valley'));
+            should.exist(themeList.get('aquarius'));
+            should.exist(themeList.get('not-aquarius'));
+            themeList.del('aquarius');
+            should.not.exist(themeList.get('aquarius'));
+            should.exist(themeList.get('not-aquarius'));
         });
 
         it('del() with no argument does nothing', function () {
-            should.exist(themeList.get('casper-valley'));
-            should.exist(themeList.get('not-casper-valley'));
+            should.exist(themeList.get('aquarius'));
+            should.exist(themeList.get('not-aquarius'));
             themeList.del();
-            should.exist(themeList.get('casper-valley'));
-            should.exist(themeList.get('not-casper-valley'));
+            should.exist(themeList.get('aquarius'));
+            should.exist(themeList.get('not-aquarius'));
         });
 
         it('init() calls set for each theme', function () {
             var setSpy = sinon.spy(themeList, 'set');
 
-            themeList.init({test: {a: 'b'}, casper-valley: {c: 'd'}});
+            themeList.init({test: {a: 'b'}, aquarius: {c: 'd'}});
             setSpy.calledTwice.should.be.true();
             setSpy.firstCall.calledWith('test', {a: 'b'}).should.be.true();
-            setSpy.secondCall.calledWith('casper-valley', {c: 'd'}).should.be.true();
+            setSpy.secondCall.calledWith('aquarius', {c: 'd'}).should.be.true();
         });
 
         it('init() with empty object resets the list', function () {

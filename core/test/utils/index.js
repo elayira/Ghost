@@ -871,7 +871,7 @@ startGhost = function startGhost(options) {
     fs.ensureDirSync(path.join(contentFolderForTests, 'settings'));
 
     if (options.copyThemes) {
-        // Copy all themes into the new test content folder. Default active theme is always casper-valley. If you want to use a different theme, you have to set the active theme (e.g. stub)
+        // Copy all themes into the new test content folder. Default active theme is always aquarius. If you want to use a different theme, you have to set the active theme (e.g. stub)
         fs.copySync(path.join(__dirname, 'fixtures', 'themes'), path.join(contentFolderForTests, 'themes'));
     }
 
@@ -1047,7 +1047,7 @@ module.exports = {
 
             const cacheStub = sandbox.stub(settingsCache, 'get');
 
-            cacheStub.withArgs('active_theme').returns(options.theme || 'casper-valley');
+            cacheStub.withArgs('active_theme').returns(options.theme || 'aquarius');
             cacheStub.withArgs('active_timezone').returns('Etc/UTC');
             cacheStub.withArgs('permalinks').returns('/:slug/');
             cacheStub.withArgs('labs').returns({publicAPI: true});

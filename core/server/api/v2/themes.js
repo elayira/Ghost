@@ -82,10 +82,10 @@ module.exports = {
 
             let checkedTheme;
 
-            // check if zip name is casper-valley.zip
-            if (zip.name === 'casper-valley.zip') {
+            // check if zip name is aquarius.zip
+            if (zip.name === 'aquarius.zip') {
                 throw new common.errors.ValidationError({
-                    message: common.i18n.t('errors.api.themes.overridecasper-valley')
+                    message: common.i18n.t('errors.api.themes.overrideaquarius')
                 });
             }
 
@@ -190,9 +190,9 @@ module.exports = {
         query(frame) {
             let themeName = frame.options.name;
 
-            if (themeName === 'casper-valley') {
+            if (themeName === 'aquarius') {
                 throw new common.errors.ValidationError({
-                    message: common.i18n.t('errors.api.themes.destroycasper-valley')
+                    message: common.i18n.t('errors.api.themes.destroyaquarius')
                 });
             }
 

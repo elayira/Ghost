@@ -18,9 +18,9 @@ content/images/**
 content/logs/**
 !content/logs/README.md
 content/themes/**
-!content/themes/casper-valley/**
-content/themes/casper-valley/assets/css/.csscomb.json
-content/themes/casper-valley/.yarnrc
+!content/themes/aquarius/**
+content/themes/aquarius/assets/css/.csscomb.json
+content/themes/aquarius/.yarnrc
 node_modules/**
 core/server/lib/members/static/auth/node_modules/**
 **/*.db*
@@ -37,7 +37,7 @@ core/built/**/tests-*
 core/client/**
 core/test/**
 CONTRIBUTING.md
-content/themes/casper-valley/SECURITY.md
+content/themes/aquarius/SECURITY.md
 SECURITY.md
 .travis.yml
 *.html
@@ -47,8 +47,8 @@ core/server/web/admin/views/.gitkeep
 bower_components/**
 .editorconfig
 gulpfile.js
-!content/themes/casper-valley/gulpfile.js
+!content/themes/aquarius/gulpfile.js
 package-lock.json
-content/themes/casper-valley/config.*.json
+content/themes/aquarius/config.*.json
 config.*.json
 !core/server/config/env/**

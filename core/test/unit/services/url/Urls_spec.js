@@ -33,7 +33,7 @@ describe('Unit: services/url/Urls', function () {
         });
 
         urls.add({
-            url: '/casper-valley/',
+            url: '/aquarius/',
             resource: {
                 data: {
                     id: 'object-id-3'

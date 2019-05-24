@@ -371,7 +371,7 @@ describe('Frontend Routing', function () {
                         should.exist(res.headers.date);
 
                         $('title').text().should.equal('Not finished yet');
-                        // @TODO: use theme from fixtures and don't rely on content/themes/casper-valley
+                        // @TODO: use theme from fixtures and don't rely on content/themes/aquarius
                         // $('.content .post').length.should.equal(1);
                         // $('.poweredby').text().should.equal('Proudly published with Ghost');
                         // $('body.post-template').length.should.equal(1);

@@ -56,17 +56,17 @@ describe('{{meta_description}} helper', function () {
 
     it('returns tag meta_description if present for a tag page', function () {
         var rendered = helpers.meta_description.call(
-            {tag: {name: 'Rasper Red', meta_description: 'Rasper is the Cool Red casper-valley'}},
+            {tag: {name: 'Rasper Red', meta_description: 'Rasper is the Cool Red aquarius'}},
             {data: {root: {context: ['tag']}}}
         );
 
         should.exist(rendered);
-        String(rendered).should.equal('Rasper is the Cool Red casper-valley');
+        String(rendered).should.equal('Rasper is the Cool Red aquarius');
     });
 
     it('returns empty description on paginated tag page that has meta data', function () {
         var rendered = helpers.meta_description.call(
-            {tag: {name: 'Rasper Red', meta_description: 'Rasper is the Cool Red casper-valley'}},
+            {tag: {name: 'Rasper Red', meta_description: 'Rasper is the Cool Red aquarius'}},
             {data: {root: {context: ['tag', 'paged']}}}
         );
 

@@ -204,7 +204,7 @@ describe('Integration: Importer', function () {
                     return models.Settings.findOne(_.merge({key: 'active_theme'}, testUtils.context.internal));
                 })
                 .then(function (result) {
-                    result.attributes.value.should.eql('casper-valley');
+                    result.attributes.value.should.eql('aquarius');
                 });
         });
 

@@ -3,11 +3,11 @@ var should = require('should'),
 
 describe('lib/fs/package-json', function () {
     // @TODO: introduce some non-theme package examples
-    var casper-valley = {
-            name: 'casper-valley',
-            path: '~/content/themes/casper-valley',
+    var aquarius = {
+            name: 'aquarius',
+            path: '~/content/themes/aquarius',
             'package.json': {
-                name: 'casper-valley',
+                name: 'aquarius',
                 description: 'The default personal blogging theme for Ghost. Beautiful, minimal and responsive.',
                 demo: 'https://demo.ghost.io',
                 version: '1.3.5',
@@ -18,8 +18,8 @@ describe('lib/fs/package-json', function () {
                 gpm: {},
                 keywords: {},
                 repository: {},
-                bugs: 'https://github.com/TryGhost/casper-valley/issues',
-                contributors: 'https://github.com/TryGhost/casper-valley/graphs/contributors'
+                bugs: 'https://github.com/TryGhost/aquarius/issues',
+                contributors: 'https://github.com/TryGhost/aquarius/graphs/contributors'
             }
         },
         simplePackage = {
@@ -37,7 +37,7 @@ describe('lib/fs/package-json', function () {
         };
 
     it('should filter packages correctly', function () {
-        var result = packageJSON.filter({casper-valley: casper-valley}),
+        var result = packageJSON.filter({aquarius: aquarius}),
             package1;
 
         result.should.be.an.Array().with.lengthOf(1);
@@ -45,13 +45,13 @@ describe('lib/fs/package-json', function () {
 
         package1.should.be.an.Object().with.properties('name', 'package', 'active');
         Object.keys(package1).should.be.an.Array().with.lengthOf(3);
-        package1.name.should.eql('casper-valley');
+        package1.name.should.eql('aquarius');
         package1.package.should.be.an.Object().with.properties('name', 'version');
         package1.active.should.be.false();
     });
 
     it('should filter packages and handle a single active package string', function () {
-        var result = packageJSON.filter({casper-valley: casper-valley, simple: simplePackage}, 'casper-valley'),
+        var result = packageJSON.filter({aquarius: aquarius, simple: simplePackage}, 'aquarius'),
             package1, package2;
 
         result.should.be.an.Array().with.lengthOf(2);
@@ -60,7 +60,7 @@ describe('lib/fs/package-json', function () {
 
         package1.should.be.an.Object().with.properties('name', 'package', 'active');
         Object.keys(package1).should.be.an.Array().with.lengthOf(3);
-        package1.name.should.eql('casper-valley');
+        package1.name.should.eql('aquarius');
         package1.package.should.be.an.Object().with.properties('name', 'version');
         package1.active.should.be.true();
 
@@ -72,7 +72,7 @@ describe('lib/fs/package-json', function () {
     });
 
     it('should filter packages and handle an array of active packages', function () {
-        var result = packageJSON.filter({casper-valley: casper-valley, simple: simplePackage}, ['casper-valley', 'simple']),
+        var result = packageJSON.filter({aquarius: aquarius, simple: simplePackage}, ['aquarius', 'simple']),
             package1, package2;
 
         result.should.be.an.Array().with.lengthOf(2);
@@ -81,7 +81,7 @@ describe('lib/fs/package-json', function () {
 
         package1.should.be.an.Object().with.properties('name', 'package', 'active');
         Object.keys(package1).should.be.an.Array().with.lengthOf(3);
-        package1.name.should.eql('casper-valley');
+        package1.name.should.eql('aquarius');
         package1.package.should.be.an.Object().with.properties('name', 'version');
         package1.active.should.be.true();
 
@@ -93,7 +93,7 @@ describe('lib/fs/package-json', function () {
     });
 
     it('handles packages with no package.json even though this makes us sad', function () {
-        var result = packageJSON.filter({casper-valley: casper-valley, missing: missingPackageJson}, ['casper-valley']),
+        var result = packageJSON.filter({aquarius: aquarius, missing: missingPackageJson}, ['aquarius']),
             package1, package2;
 
         result.should.be.an.Array().with.lengthOf(2);
@@ -102,7 +102,7 @@ describe('lib/fs/package-json', function () {
 
         package1.should.be.an.Object().with.properties('name', 'package', 'active');
         Object.keys(package1).should.be.an.Array().with.lengthOf(3);
-        package1.name.should.eql('casper-valley');
+        package1.name.should.eql('aquarius');
         package1.package.should.be.an.Object().with.properties('name', 'version');
         package1.active.should.be.true();
 

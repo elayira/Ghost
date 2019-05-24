@@ -1,5 +1,5 @@
 {
-    "name": "casper-valley",
+    "name": "aquarius",
     "description": "The default personal blogging theme for Ghost. Beautiful, minimal and responsive.",
     "demo": "https://demo.ghost.io",
     "version": "2.4.2",
@@ -33,10 +33,10 @@
     ],
     "repository": {
         "type": "git",
-        "url": "https://github.com/TryGhost/casper-valley.git"
+        "url": "https://github.com/TryGhost/aquarius.git"
     },
-    "bugs": "https://github.com/TryGhost/casper-valley/issues",
-    "contributors": "https://github.com/TryGhost/casper-valley/graphs/contributors",
+    "bugs": "https://github.com/TryGhost/aquarius/issues",
+    "contributors": "https://github.com/TryGhost/aquarius/graphs/contributors",
     "devDependencies": {
         "autoprefixer": "6.3.6",
         "cssnano": "3.7.1",

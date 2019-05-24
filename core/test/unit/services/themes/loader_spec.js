@@ -27,14 +27,14 @@ describe('Themes', function () {
         describe('Load All', function () {
             it('should load directory and include only folders', function (done) {
                 // create trash
-                fs.writeFileSync(join(themePath.name, 'casper-valley.zip'));
+                fs.writeFileSync(join(themePath.name, 'aquarius.zip'));
                 fs.writeFileSync(join(themePath.name, '.DS_Store'));
 
                 // create actual theme
-                fs.mkdirSync(join(themePath.name, 'casper-valley'));
-                fs.mkdirSync(join(themePath.name, 'casper-valley', 'partials'));
-                fs.writeFileSync(join(themePath.name, 'casper-valley', 'index.hbs'));
-                fs.writeFileSync(join(themePath.name, 'casper-valley', 'partials', 'navigation.hbs'));
+                fs.mkdirSync(join(themePath.name, 'aquarius'));
+                fs.mkdirSync(join(themePath.name, 'aquarius', 'partials'));
+                fs.writeFileSync(join(themePath.name, 'aquarius', 'index.hbs'));
+                fs.writeFileSync(join(themePath.name, 'aquarius', 'partials', 'navigation.hbs'));
 
                 themes.loadAll()
                     .then(function (result) {
@@ -44,9 +44,9 @@ describe('Themes', function () {
                         should.not.exist(result);
 
                         themeResult.should.eql({
-                            casper-valley: {
-                                name: 'casper-valley',
-                                path: join(themePath.name, 'casper-valley'),
+                            aquarius: {
+                                name: 'aquarius',
+                                path: join(themePath.name, 'aquarius'),
                                 'package.json': null
                             }
                         });
@@ -62,11 +62,11 @@ describe('Themes', function () {
                 fs.writeFileSync(join(themePath.name, 'Thumbs.db'));
 
                 // create actual theme
-                fs.mkdirSync(join(themePath.name, 'casper-valley'));
-                fs.mkdirSync(join(themePath.name, 'not-casper-valley'));
+                fs.mkdirSync(join(themePath.name, 'aquarius'));
+                fs.mkdirSync(join(themePath.name, 'not-aquarius'));
                 fs.writeFileSync(
-                    join(themePath.name, 'casper-valley', 'package.json'),
-                    JSON.stringify({name: 'casper-valley', version: '0.1.2'})
+                    join(themePath.name, 'aquarius', 'package.json'),
+                    JSON.stringify({name: 'aquarius', version: '0.1.2'})
                 );
 
                 themes.loadAll()
@@ -77,14 +77,14 @@ describe('Themes', function () {
                         should.not.exist(result);
 
                         themeResult.should.eql({
-                            casper-valley: {
-                                name: 'casper-valley',
-                                path: join(themePath.name, 'casper-valley'),
-                                'package.json': {name: 'casper-valley', version: '0.1.2'}
+                            aquarius: {
+                                name: 'aquarius',
+                                path: join(themePath.name, 'aquarius'),
+                                'package.json': {name: 'aquarius', version: '0.1.2'}
                             },
-                            'not-casper-valley': {
-                                name: 'not-casper-valley',
-                                path: join(themePath.name, 'not-casper-valley'),
+                            'not-aquarius': {
+                                name: 'not-aquarius',
+                                path: join(themePath.name, 'not-aquarius'),
                                 'package.json': null
                             }
                         });
@@ -98,25 +98,25 @@ describe('Themes', function () {
         describe('Load One', function () {
             it('should read directory and include only single requested theme', function (done) {
                 // create trash
-                fs.writeFileSync(join(themePath.name, 'casper-valley.zip'));
+                fs.writeFileSync(join(themePath.name, 'aquarius.zip'));
                 fs.writeFileSync(join(themePath.name, '.DS_Store'));
 
                 // create actual theme
-                fs.mkdirSync(join(themePath.name, 'casper-valley'));
-                fs.writeFileSync(join(themePath.name, 'casper-valley', 'index.hbs'));
+                fs.mkdirSync(join(themePath.name, 'aquarius'));
+                fs.writeFileSync(join(themePath.name, 'aquarius', 'index.hbs'));
                 fs.writeFileSync(
-                    join(themePath.name, 'casper-valley', 'package.json'),
-                    JSON.stringify({name: 'casper-valley', version: '0.1.2'})
+                    join(themePath.name, 'aquarius', 'package.json'),
+                    JSON.stringify({name: 'aquarius', version: '0.1.2'})
                 );
-                fs.mkdirSync(join(themePath.name, 'not-casper-valley'));
-                fs.writeFileSync(join(themePath.name, 'not-casper-valley', 'index.hbs'));
+                fs.mkdirSync(join(themePath.name, 'not-aquarius'));
+                fs.writeFileSync(join(themePath.name, 'not-aquarius', 'index.hbs'));
 
-                themes.loadOne('casper-valley')
+                themes.loadOne('aquarius')
                     .then(function (themeResult) {
                         themeResult.should.eql({
-                            name: 'casper-valley',
-                            path: join(themePath.name, 'casper-valley'),
-                            'package.json': {name: 'casper-valley', version: '0.1.2'}
+                            name: 'aquarius',
+                            path: join(themePath.name, 'aquarius'),
+                            'package.json': {name: 'aquarius', version: '0.1.2'}
                         });
 
                         done();
@@ -126,10 +126,10 @@ describe('Themes', function () {
 
             it('should throw an error if theme cannot be found', function (done) {
                 // create trash
-                fs.writeFileSync(join(themePath.name, 'casper-valley.zip'));
+                fs.writeFileSync(join(themePath.name, 'aquarius.zip'));
                 fs.writeFileSync(join(themePath.name, '.DS_Store'));
 
-                themes.loadOne('casper-valley')
+                themes.loadOne('aquarius')
                     .then(function () {
                         done('Should have thrown an error');
                     })

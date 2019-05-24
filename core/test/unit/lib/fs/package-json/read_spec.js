@@ -10,8 +10,8 @@ describe('lib/fs/package-json: read', function () {
             var packagePath = tmp.dirSync({unsafeCleanup: true});
 
             // create example theme
-            fs.mkdirSync(join(packagePath.name, 'casper-valley'));
-            fs.writeFileSync(join(packagePath.name, 'casper-valley', 'index.hbs'));
+            fs.mkdirSync(join(packagePath.name, 'aquarius'));
+            fs.writeFileSync(join(packagePath.name, 'aquarius', 'index.hbs'));
 
             // create some trash
             fs.mkdirSync(join(packagePath.name, 'node_modules'));
@@ -22,9 +22,9 @@ describe('lib/fs/package-json: read', function () {
             packageJSON.read.all(packagePath.name)
                 .then(function (pkgs) {
                     pkgs.should.eql({
-                        casper-valley: {
-                            name: 'casper-valley',
-                            path: join(packagePath.name, 'casper-valley'),
+                        aquarius: {
+                            name: 'aquarius',
+                            path: join(packagePath.name, 'aquarius'),
                             'package.json': null
                         }
                     });
@@ -103,8 +103,8 @@ describe('lib/fs/package-json: read', function () {
             var packagePath = tmp.dirSync({unsafeCleanup: true});
 
             // create example theme
-            fs.mkdirSync(join(packagePath.name, 'casper-valley'));
-            fs.writeFileSync(join(packagePath.name, 'casper-valley', 'index.hbs'));
+            fs.mkdirSync(join(packagePath.name, 'aquarius'));
+            fs.writeFileSync(join(packagePath.name, 'aquarius', 'index.hbs'));
 
             // create some trash
             fs.mkdirSync(join(packagePath.name, 'node_modules'));
@@ -112,12 +112,12 @@ describe('lib/fs/package-json: read', function () {
             fs.mkdirSync(join(packagePath.name, '.git'));
             fs.writeFileSync(join(packagePath.name, '.DS_Store'));
 
-            packageJSON.read.one(packagePath.name, 'casper-valley')
+            packageJSON.read.one(packagePath.name, 'aquarius')
                 .then(function (pkgs) {
                     pkgs.should.eql({
-                        casper-valley: {
-                            name: 'casper-valley',
-                            path: join(packagePath.name, 'casper-valley'),
+                        aquarius: {
+                            name: 'aquarius',
+                            path: join(packagePath.name, 'aquarius'),
                             'package.json': null
                         }
                     });
@@ -194,23 +194,23 @@ describe('lib/fs/package-json: read', function () {
             var packagePath = tmp.dirSync({unsafeCleanup: true});
 
             // create trash
-            fs.writeFileSync(join(packagePath.name, 'casper-valley.zip'));
+            fs.writeFileSync(join(packagePath.name, 'aquarius.zip'));
             fs.writeFileSync(join(packagePath.name, '.DS_Store'));
 
             // create actual theme
-            fs.mkdirSync(join(packagePath.name, 'casper-valley'));
-            fs.mkdirSync(join(packagePath.name, 'casper-valley', 'partials'));
-            fs.writeFileSync(join(packagePath.name, 'casper-valley', 'index.hbs'));
-            fs.writeFileSync(join(packagePath.name, 'casper-valley', 'partials', 'navigation.hbs'));
-            fs.mkdirSync(join(packagePath.name, 'not-casper-valley'));
-            fs.writeFileSync(join(packagePath.name, 'not-casper-valley', 'index.hbs'));
+            fs.mkdirSync(join(packagePath.name, 'aquarius'));
+            fs.mkdirSync(join(packagePath.name, 'aquarius', 'partials'));
+            fs.writeFileSync(join(packagePath.name, 'aquarius', 'index.hbs'));
+            fs.writeFileSync(join(packagePath.name, 'aquarius', 'partials', 'navigation.hbs'));
+            fs.mkdirSync(join(packagePath.name, 'not-aquarius'));
+            fs.writeFileSync(join(packagePath.name, 'not-aquarius', 'index.hbs'));
 
-            packageJSON.read.one(packagePath.name, 'casper-valley')
+            packageJSON.read.one(packagePath.name, 'aquarius')
                 .then(function (pkgs) {
                     pkgs.should.eql({
-                        casper-valley: {
-                            name: 'casper-valley',
-                            path: join(packagePath.name, 'casper-valley'),
+                        aquarius: {
+                            name: 'aquarius',
+                            path: join(packagePath.name, 'aquarius'),
                             'package.json': null
                         }
                     });
@@ -225,10 +225,10 @@ describe('lib/fs/package-json: read', function () {
             var packagePath = tmp.dirSync({unsafeCleanup: true});
 
             // create trash
-            fs.writeFileSync(join(packagePath.name, 'casper-valley.zip'));
+            fs.writeFileSync(join(packagePath.name, 'aquarius.zip'));
             fs.writeFileSync(join(packagePath.name, '.DS_Store'));
 
-            packageJSON.read.one(packagePath.name, 'casper-valley')
+            packageJSON.read.one(packagePath.name, 'aquarius')
                 .then(function () {
                     done('Should have thrown an error');
                 })
@@ -243,10 +243,10 @@ describe('lib/fs/package-json: read', function () {
             var packagePath = tmp.dirSync({unsafeCleanup: true});
 
             // create trash
-            fs.writeFileSync(join(packagePath.name, 'casper-valley.zip'));
+            fs.writeFileSync(join(packagePath.name, 'aquarius.zip'));
             fs.writeFileSync(join(packagePath.name, '.DS_Store'));
 
-            packageJSON.read.one(packagePath.name, 'casper-valley.zip')
+            packageJSON.read.one(packagePath.name, 'aquarius.zip')
                 .then(function (pkg) {
                     pkg.should.eql({});
 

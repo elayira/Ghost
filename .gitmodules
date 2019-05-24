@@ -1,5 +1,5 @@
-[submodule "content/themes/casper-valley"]
-	path = content/themes/casper-valley
+[submodule "content/themes/aquarius"]
+	path = content/themes/aquarius
 	url = ../../TryGhost/casper.git
 [submodule "core/client"]
 	path = core/client

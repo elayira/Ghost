@@ -923,7 +923,7 @@ describe('Post API', function () {
                         draftPost.posts[0].title.should.eql(newTitle);
                         localUtils.API.checkResponse(draftPost.posts[0], 'post', 'tags');
 
-                        draftPost.posts[0].title = 'Vote for casper-valley in red';
+                        draftPost.posts[0].title = 'Vote for aquarius in red';
 
                         request.put(localUtils.API.getApiQuery('posts/' + draftPost.posts[0].id + '/?include=tags'))
                             .set('Authorization', 'Bearer ' + ownerAccessToken)
@@ -975,7 +975,7 @@ describe('Post API', function () {
                         draftPost.posts[0].title.should.eql(newTitle);
                         localUtils.API.checkResponse(draftPost.posts[0], 'post', 'tags');
 
-                        draftPost.posts[0].title = 'Vote for casper-valley in red';
+                        draftPost.posts[0].title = 'Vote for aquarius in red';
                         draftPost.posts[0].status = draftState;
 
                         request.put(localUtils.API.getApiQuery('posts/' + draftPost.posts[0].id + '/?include=tags'))

@@ -90,9 +90,9 @@ themes = {
             },
             checkedTheme;
 
-        // check if zip name is casper-valley.zip
-        if (zip.name === 'casper-valley.zip') {
-            throw new common.errors.ValidationError({message: common.i18n.t('errors.api.themes.overridecasper-valley')});
+        // check if zip name is aquarius.zip
+        if (zip.name === 'aquarius.zip') {
+            throw new common.errors.ValidationError({message: common.i18n.t('errors.api.themes.overrideaquarius')});
         }
 
         return localUtils
@@ -185,8 +185,8 @@ themes = {
             .handlePermissions('themes', 'destroy')(options)
             // Validation
             .then(() => {
-                if (themeName === 'casper-valley') {
-                    throw new common.errors.ValidationError({message: common.i18n.t('errors.api.themes.destroycasper-valley')});
+                if (themeName === 'aquarius') {
+                    throw new common.errors.ValidationError({message: common.i18n.t('errors.api.themes.destroyaquarius')});
                 }
 
                 if (themeName === settingsCache.get('active_theme')) {
