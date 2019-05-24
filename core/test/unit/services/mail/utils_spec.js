@@ -93,7 +93,7 @@ describe('Mail: Utils', function () {
                             text: 'This is the fifth blog post. It&#x2019;s also awesome&#x2026;',
                             url: 'http://myblog.com/fifth-blog-post',
                             tag: 'fifth',
-                            author: 'casper the ghost'
+                            author: 'casper-valley the ghost'
                         }
                     ]
                 },

@@ -147,10 +147,10 @@ describe('{{url}} helper', function () {
 
     it('external urls should be retained in a nav context', function () {
         rendered = helpers.url.call(
-            {url: 'http://casper.website/baz', label: 'Baz', slug: 'baz', current: true},
+            {url: 'http://casper-valley.website/baz', label: 'Baz', slug: 'baz', current: true},
             {hash: {absolute: 'true'}});
         should.exist(rendered);
-        rendered.string.should.equal('http://casper.website/baz');
+        rendered.string.should.equal('http://casper-valley.website/baz');
     });
 
     it('should handle hosted urls in a nav context', function () {
@@ -193,16 +193,16 @@ describe('{{url}} helper', function () {
 
     it('should pass through protocol-less URLs regardless of absolute setting', function () {
         rendered = helpers.url.call(
-            {url: '//casper.website/baz', label: 'Baz', slug: 'baz', current: true},
+            {url: '//casper-valley.website/baz', label: 'Baz', slug: 'baz', current: true},
             {hash: {}});
         should.exist(rendered);
-        rendered.string.should.equal('//casper.website/baz');
+        rendered.string.should.equal('//casper-valley.website/baz');
 
         rendered = helpers.url.call(
-            {url: '//casper.website/baz', label: 'Baz', slug: 'baz', current: true},
+            {url: '//casper-valley.website/baz', label: 'Baz', slug: 'baz', current: true},
             {hash: {absolute: 'true'}});
         should.exist(rendered);
-        rendered.string.should.equal('//casper.website/baz');
+        rendered.string.should.equal('//casper-valley.website/baz');
     });
 
     it('should pass through URLs with alternative schemes regardless of absolute setting', function () {
@@ -270,10 +270,10 @@ describe('{{url}} helper', function () {
         it('external urls should be retained in a nav context with subdir', function () {
             configUtils.set({url: 'http://localhost:82832/blog'});
             rendered = helpers.url.call(
-                {url: 'http://casper.website/baz', label: 'Baz', slug: 'baz', current: true},
+                {url: 'http://casper-valley.website/baz', label: 'Baz', slug: 'baz', current: true},
                 {hash: {absolute: 'true'}});
             should.exist(rendered);
-            rendered.string.should.equal('http://casper.website/baz');
+            rendered.string.should.equal('http://casper-valley.website/baz');
         });
 
         it('should handle subdir being set in nav context', function () {

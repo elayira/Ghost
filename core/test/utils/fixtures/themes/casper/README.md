@@ -1,6 +1,6 @@
-# Casper
+# casper-valley
 
-The default theme for [Ghost](http://github.com/tryghost/ghost/). This is the latest development version of Casper. If you're just looking to download the latest release, head over to the [releases](https://github.com/TryGhost/Casper/releases) page.
+The default theme for [Ghost](http://github.com/tryghost/ghost/). This is the latest development version of casper-valley. If you're just looking to download the latest release, head over to the [releases](https://github.com/TryGhost/casper-valley/releases) page.
 
 &nbsp;
 
@@ -32,7 +32,7 @@ One really neat trick is that you can also create custom one-off templates just 
 
 # Development
 
-Casper styles are compiled using Gulp/PostCSS to polyfill future CSS spec. You'll need Node and Gulp installed globally. After that, from the theme's root directory:
+casper-valley styles are compiled using Gulp/PostCSS to polyfill future CSS spec. You'll need Node and Gulp installed globally. After that, from the theme's root directory:
 
 ```bash
 $ yarn install
@@ -56,7 +56,7 @@ $ yarn zip
 
 # SVG Icons
 
-Casper uses inline SVG icons, included via Handlebars partials. You can find all icons inside `/partials/icons`. To use an icon just include the name of the relevant file, eg. To include the SVG icon in `/partials/icons/rss.hbs` - use `{{> "icons/rss"}}`.
+casper-valley uses inline SVG icons, included via Handlebars partials. You can find all icons inside `/partials/icons`. To use an icon just include the name of the relevant file, eg. To include the SVG icon in `/partials/icons/rss.hbs` - use `{{> "icons/rss"}}`.
 
 You can add your own SVG icons in the same manner.
 

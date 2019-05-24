@@ -6,7 +6,7 @@ var should = require('should'),
 
 describe('lib/fs: read csv', function () {
     const symlinkPath = path.join(__dirname, '..', '..', '..', 'utils', 'fixtures', 'themes', 'theme-symlink'),
-        folderToSymlink = path.join(__dirname, '..', '..', '..', 'utils', 'fixtures', 'themes', 'casper'),
+        folderToSymlink = path.join(__dirname, '..', '..', '..', 'utils', 'fixtures', 'themes', 'casper-valley'),
         zipDestination = path.join(__dirname, '..', '..', '..', 'utils', 'fixtures', 'themes', 'theme-symlink.zip'),
         unzipDestination = path.join(__dirname, '..', '..', '..', 'utils', 'fixtures', 'themes', 'theme-symlink-unzipped');
 

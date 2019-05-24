@@ -27,14 +27,14 @@ describe('Themes', function () {
         describe('Load All', function () {
             it('should load directory and include only folders', function (done) {
                 // create trash
-                fs.writeFileSync(join(themePath.name, 'casper.zip'));
+                fs.writeFileSync(join(themePath.name, 'casper-valley.zip'));
                 fs.writeFileSync(join(themePath.name, '.DS_Store'));
 
                 // create actual theme
-                fs.mkdirSync(join(themePath.name, 'casper'));
-                fs.mkdirSync(join(themePath.name, 'casper', 'partials'));
-                fs.writeFileSync(join(themePath.name, 'casper', 'index.hbs'));
-                fs.writeFileSync(join(themePath.name, 'casper', 'partials', 'navigation.hbs'));
+                fs.mkdirSync(join(themePath.name, 'casper-valley'));
+                fs.mkdirSync(join(themePath.name, 'casper-valley', 'partials'));
+                fs.writeFileSync(join(themePath.name, 'casper-valley', 'index.hbs'));
+                fs.writeFileSync(join(themePath.name, 'casper-valley', 'partials', 'navigation.hbs'));
 
                 themes.loadAll()
                     .then(function (result) {
@@ -44,9 +44,9 @@ describe('Themes', function () {
                         should.not.exist(result);
 
                         themeResult.should.eql({
-                            casper: {
-                                name: 'casper',
-                                path: join(themePath.name, 'casper'),
+                            casper-valley: {
+                                name: 'casper-valley',
+                                path: join(themePath.name, 'casper-valley'),
                                 'package.json': null
                             }
                         });
@@ -62,11 +62,11 @@ describe('Themes', function () {
                 fs.writeFileSync(join(themePath.name, 'Thumbs.db'));
 
                 // create actual theme
-                fs.mkdirSync(join(themePath.name, 'casper'));
-                fs.mkdirSync(join(themePath.name, 'not-casper'));
+                fs.mkdirSync(join(themePath.name, 'casper-valley'));
+                fs.mkdirSync(join(themePath.name, 'not-casper-valley'));
                 fs.writeFileSync(
-                    join(themePath.name, 'casper', 'package.json'),
-                    JSON.stringify({name: 'casper', version: '0.1.2'})
+                    join(themePath.name, 'casper-valley', 'package.json'),
+                    JSON.stringify({name: 'casper-valley', version: '0.1.2'})
                 );
 
                 themes.loadAll()
@@ -77,14 +77,14 @@ describe('Themes', function () {
                         should.not.exist(result);
 
                         themeResult.should.eql({
-                            casper: {
-                                name: 'casper',
-                                path: join(themePath.name, 'casper'),
-                                'package.json': {name: 'casper', version: '0.1.2'}
+                            casper-valley: {
+                                name: 'casper-valley',
+                                path: join(themePath.name, 'casper-valley'),
+                                'package.json': {name: 'casper-valley', version: '0.1.2'}
                             },
-                            'not-casper': {
-                                name: 'not-casper',
-                                path: join(themePath.name, 'not-casper'),
+                            'not-casper-valley': {
+                                name: 'not-casper-valley',
+                                path: join(themePath.name, 'not-casper-valley'),
                                 'package.json': null
                             }
                         });
@@ -98,25 +98,25 @@ describe('Themes', function () {
         describe('Load One', function () {
             it('should read directory and include only single requested theme', function (done) {
                 // create trash
-                fs.writeFileSync(join(themePath.name, 'casper.zip'));
+                fs.writeFileSync(join(themePath.name, 'casper-valley.zip'));
                 fs.writeFileSync(join(themePath.name, '.DS_Store'));
 
                 // create actual theme
-                fs.mkdirSync(join(themePath.name, 'casper'));
-                fs.writeFileSync(join(themePath.name, 'casper', 'index.hbs'));
+                fs.mkdirSync(join(themePath.name, 'casper-valley'));
+                fs.writeFileSync(join(themePath.name, 'casper-valley', 'index.hbs'));
                 fs.writeFileSync(
-                    join(themePath.name, 'casper', 'package.json'),
-                    JSON.stringify({name: 'casper', version: '0.1.2'})
+                    join(themePath.name, 'casper-valley', 'package.json'),
+                    JSON.stringify({name: 'casper-valley', version: '0.1.2'})
                 );
-                fs.mkdirSync(join(themePath.name, 'not-casper'));
-                fs.writeFileSync(join(themePath.name, 'not-casper', 'index.hbs'));
+                fs.mkdirSync(join(themePath.name, 'not-casper-valley'));
+                fs.writeFileSync(join(themePath.name, 'not-casper-valley', 'index.hbs'));
 
-                themes.loadOne('casper')
+                themes.loadOne('casper-valley')
                     .then(function (themeResult) {
                         themeResult.should.eql({
-                            name: 'casper',
-                            path: join(themePath.name, 'casper'),
-                            'package.json': {name: 'casper', version: '0.1.2'}
+                            name: 'casper-valley',
+                            path: join(themePath.name, 'casper-valley'),
+                            'package.json': {name: 'casper-valley', version: '0.1.2'}
                         });
 
                         done();
@@ -126,10 +126,10 @@ describe('Themes', function () {
 
             it('should throw an error if theme cannot be found', function (done) {
                 // create trash
-                fs.writeFileSync(join(themePath.name, 'casper.zip'));
+                fs.writeFileSync(join(themePath.name, 'casper-valley.zip'));
                 fs.writeFileSync(join(themePath.name, '.DS_Store'));
 
-                themes.loadOne('casper')
+                themes.loadOne('casper-valley')
                     .then(function () {
                         done('Should have thrown an error');
                     })

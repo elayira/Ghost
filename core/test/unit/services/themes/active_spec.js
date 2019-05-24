@@ -27,7 +27,7 @@ describe('Themes', function () {
                 };
 
                 fakeLoadedTheme = {
-                    name: 'casper',
+                    name: 'casper-valley',
                     path: 'my/fake/theme/path'
                 };
                 fakeCheckedTheme = {

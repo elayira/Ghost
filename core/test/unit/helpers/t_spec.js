@@ -7,7 +7,7 @@ const should = require('should'),
 
 describe('{{t}} helper', function () {
     beforeEach(function () {
-        settingsCache.set('active_theme', {value: 'casper'});
+        settingsCache.set('active_theme', {value: 'casper-valley'});
         configUtils.set('paths:contentPath', path.join(__dirname, '../../utils/fixtures/'));
     });
 
@@ -49,7 +49,7 @@ describe('{{t}} helper', function () {
     });
 
     it('[fallback] no theme files at all, use key as translation', function () {
-        settingsCache.set('active_theme', {value: 'casper-1.4'});
+        settingsCache.set('active_theme', {value: 'casper-valley-1.4'});
         settingsCache.set('default_locale', {value: 'de'});
         common.i18n.loadThemeTranslations();
 

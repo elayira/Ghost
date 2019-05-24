@@ -412,8 +412,8 @@
                 "invalidThemeName": "Please select a valid theme.",
                 "missingFile": "Please select a theme.",
                 "invalidFile": "Please select a valid zip file.",
-                "overrideCasper": "Please rename your zip, it's not allowed to override the default casper theme.",
-                "destroyCasper": "Deleting the default casper theme is not allowed.",
+                "overridecasper-valley": "Please rename your zip, it's not allowed to override the default casper-valley theme.",
+                "destroycasper-valley": "Deleting the default casper-valley theme is not allowed.",
                 "destroyActive": "Deleting the active theme is not allowed."
             },
             "images": {

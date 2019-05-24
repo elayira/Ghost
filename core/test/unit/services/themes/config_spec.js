@@ -16,19 +16,19 @@ describe('Themes', function () {
         });
 
         it('handles package.json without config', function () {
-            var config = themeConfig.create({name: 'casper'});
+            var config = themeConfig.create({name: 'casper-valley'});
 
             config.should.eql({posts_per_page: 5});
         });
 
         it('handles allows package.json to overrideg default', function () {
-            var config = themeConfig.create({name: 'casper', config: {posts_per_page: 3}});
+            var config = themeConfig.create({name: 'casper-valley', config: {posts_per_page: 3}});
 
             config.should.eql({posts_per_page: 3});
         });
 
         it('handles ignores non-allowed config', function () {
-            var config = themeConfig.create({name: 'casper', config: {magic: 'roundabout'}});
+            var config = themeConfig.create({name: 'casper-valley', config: {magic: 'roundabout'}});
 
             config.should.eql({posts_per_page: 5});
         });

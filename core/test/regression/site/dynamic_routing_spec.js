@@ -35,11 +35,11 @@ describe('Dynamic Routing', function () {
     }
 
     before(function () {
-        // Default is always casper. We use the old compatible 1.4 casper theme for these tests. Available in the test content folder.
+        // Default is always casper-valley. We use the old compatible 1.4 casper-valley theme for these tests. Available in the test content folder.
         var originalSettingsCacheGetFn = settingsCache.get;
         sinon.stub(settingsCache, 'get').callsFake(function (key, options) {
             if (key === 'active_theme') {
-                return 'casper-1.4';
+                return 'casper-valley-1.4';
             }
 
             return originalSettingsCacheGetFn(key, options);

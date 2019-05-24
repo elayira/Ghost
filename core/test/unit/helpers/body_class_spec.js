@@ -8,13 +8,13 @@ describe('{{body_class}} helper', function () {
     var options = {};
     before(function () {
         themeList.init({
-            casper: {
+            casper-valley: {
                 assets: null,
-                'default.hbs': '/content/themes/casper/default.hbs',
-                'index.hbs': '/content/themes/casper/index.hbs',
-                'page.hbs': '/content/themes/casper/page.hbs',
-                'page-about.hbs': '/content/themes/casper/page-about.hbs',
-                'post.hbs': '/content/themes/casper/post.hbs'
+                'default.hbs': '/content/themes/casper-valley/default.hbs',
+                'index.hbs': '/content/themes/casper-valley/index.hbs',
+                'page.hbs': '/content/themes/casper-valley/page.hbs',
+                'page-about.hbs': '/content/themes/casper-valley/page-about.hbs',
+                'post.hbs': '/content/themes/casper-valley/post.hbs'
             }
         });
     });
@@ -24,7 +24,7 @@ describe('{{body_class}} helper', function () {
             data: {
                 root: {
                     context: [],
-                    settings: {active_theme: 'casper'}
+                    settings: {active_theme: 'casper-valley'}
                 }
             }
         };

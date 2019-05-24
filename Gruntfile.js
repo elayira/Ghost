@@ -66,8 +66,8 @@ const configureGrunt = function (grunt) {
         watch: grunt.option('no-server-watch') ? {files: []} : {
             livereload: {
                 files: [
-                    'content/themes/casper/assets/css/*.css',
-                    'content/themes/casper/assets/js/*.js'
+                    'content/themes/casper-valley/assets/css/*.css',
+                    'content/themes/casper-valley/assets/js/*.js'
                 ],
                 options: {
                     livereload: true,
@@ -284,7 +284,7 @@ const configureGrunt = function (grunt) {
                 },
                 projects: {
                     'core/client': 'init',
-                    'content/themes/casper': 'init'
+                    'content/themes/casper-valley': 'init'
                 }
             },
 
@@ -559,7 +559,7 @@ const configureGrunt = function (grunt) {
     // require a server restart for the changes to take effect) and also manage reloading the browser whenever
     // frontend code changes.
     //
-    // Note that the current implementation of watch only works with casper, not other themes.
+    // Note that the current implementation of watch only works with casper-valley, not other themes.
     grunt.registerTask('dev', 'Dev Mode; watch files and restart server on changes', function () {
         if (grunt.option('client')) {
             grunt.task.run(['clean:built', 'bgShell:client']);

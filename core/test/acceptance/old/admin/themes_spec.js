@@ -52,12 +52,12 @@ describe('Themes API', function () {
                 jsonResponse.themes[0].active.should.be.false();
 
                 localUtils.API.checkResponse(jsonResponse.themes[1], 'theme', 'templates');
-                jsonResponse.themes[1].name.should.eql('casper');
+                jsonResponse.themes[1].name.should.eql('casper-valley');
                 jsonResponse.themes[1].package.should.be.an.Object().with.properties('name', 'version');
                 jsonResponse.themes[1].active.should.be.true();
 
                 localUtils.API.checkResponse(jsonResponse.themes[2], 'theme');
-                jsonResponse.themes[2].name.should.eql('casper-1.4');
+                jsonResponse.themes[2].name.should.eql('casper-valley-1.4');
                 jsonResponse.themes[2].package.should.be.an.Object().with.properties('name', 'version');
                 jsonResponse.themes[2].active.should.be.false();
 
@@ -75,10 +75,10 @@ describe('Themes API', function () {
 
     it('Can download a theme', function () {
         return ownerRequest
-            .get(localUtils.API.getApiQuery('themes/casper/download/'))
+            .get(localUtils.API.getApiQuery('themes/casper-valley/download/'))
             .set('Origin', config.get('url'))
             .expect('Content-Type', /application\/zip/)
-            .expect('Content-Disposition', 'attachment; filename=casper.zip')
+            .expect('Content-Disposition', 'attachment; filename=casper-valley.zip')
             .expect(200);
     });
 
@@ -121,9 +121,9 @@ describe('Themes API', function () {
 
                 tmpFolderContents.should.eql([
                     'broken-theme',
-                    'casper',
-                    'casper-1.4',
-                    'casper.zip',
+                    'casper-valley',
+                    'casper-valley-1.4',
+                    'casper-valley.zip',
                     'invalid.zip',
                     'test-theme',
                     'test-theme-channels',
@@ -145,11 +145,11 @@ describe('Themes API', function () {
                 localUtils.API.checkResponse(jsonResponse, 'themes');
                 jsonResponse.themes.length.should.eql(6);
 
-                // Casper should be present and still active
-                const casperTheme = _.find(jsonResponse.themes, {name: 'casper'});
-                should.exist(casperTheme);
-                localUtils.API.checkResponse(casperTheme, 'theme', 'templates');
-                casperTheme.active.should.be.true();
+                // casper-valley should be present and still active
+                const casper-valleyTheme = _.find(jsonResponse.themes, {name: 'casper-valley'});
+                should.exist(casper-valleyTheme);
+                localUtils.API.checkResponse(casper-valleyTheme, 'theme', 'templates');
+                casper-valleyTheme.active.should.be.true();
 
                 // The added theme should be here
                 const addedTheme = _.find(jsonResponse.themes, {name: 'valid'});
@@ -180,9 +180,9 @@ describe('Themes API', function () {
 
                 tmpFolderContents.should.eql([
                     'broken-theme',
-                    'casper',
-                    'casper-1.4',
-                    'casper.zip',
+                    'casper-valley',
+                    'casper-valley-1.4',
+                    'casper-valley.zip',
                     'invalid.zip',
                     'test-theme',
                     'test-theme-channels',
@@ -203,11 +203,11 @@ describe('Themes API', function () {
                 localUtils.API.checkResponse(jsonResponse, 'themes');
                 jsonResponse.themes.length.should.eql(5);
 
-                // Casper should be present and still active
-                const casperTheme = _.find(jsonResponse.themes, {name: 'casper'});
-                should.exist(casperTheme);
-                localUtils.API.checkResponse(casperTheme, 'theme', 'templates');
-                casperTheme.active.should.be.true();
+                // casper-valley should be present and still active
+                const casper-valleyTheme = _.find(jsonResponse.themes, {name: 'casper-valley'});
+                should.exist(casper-valleyTheme);
+                localUtils.API.checkResponse(casper-valleyTheme, 'theme', 'templates');
+                casper-valleyTheme.active.should.be.true();
 
                 // The deleted theme should not be here
                 const deletedTheme = _.find(jsonResponse.themes, {name: 'valid'});
@@ -248,10 +248,10 @@ describe('Themes API', function () {
                 localUtils.API.checkResponse(jsonResponse, 'themes');
                 jsonResponse.themes.length.should.eql(5);
 
-                const casperTheme = _.find(jsonResponse.themes, {name: 'casper'});
-                should.exist(casperTheme);
-                localUtils.API.checkResponse(casperTheme, 'theme', 'templates');
-                casperTheme.active.should.be.true();
+                const casper-valleyTheme = _.find(jsonResponse.themes, {name: 'casper-valley'});
+                should.exist(casper-valleyTheme);
+                localUtils.API.checkResponse(casper-valleyTheme, 'theme', 'templates');
+                casper-valleyTheme.active.should.be.true();
 
                 const testTheme = _.find(jsonResponse.themes, {name: 'test-theme'});
                 should.exist(testTheme);
@@ -272,8 +272,8 @@ describe('Themes API', function () {
                 localUtils.API.checkResponse(jsonResponse, 'themes');
                 jsonResponse.themes.length.should.eql(1);
 
-                const casperTheme = _.find(jsonResponse.themes, {name: 'casper'});
-                should.not.exist(casperTheme);
+                const casper-valleyTheme = _.find(jsonResponse.themes, {name: 'casper-valley'});
+                should.not.exist(casper-valleyTheme);
 
                 const testTheme = _.find(jsonResponse.themes, {name: 'test-theme'});
                 should.exist(testTheme);
