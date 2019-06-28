@@ -1,6 +1,6 @@
 [submodule "content/themes/aquarius"]
 	path = content/themes/aquarius
-	url = ../../TryGhost/casper.git
+	url = ../../elayira/aquarius.git
 [submodule "core/client"]
 	path = core/client
 	url = ../../TryGhost/Ghost-Admin.git
