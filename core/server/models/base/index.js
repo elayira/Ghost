@@ -16,7 +16,7 @@ const _ = require('lodash'),
     common = require('../../lib/common'),
     security = require('../../lib/security'),
     schema = require('../../data/schema'),
-    urlService = require('../../services/url'),
+    urlUtils = require('../../lib/url-utils'),
     validation = require('../../data/validation'),
     plugins = require('../plugins');
 
@@ -1110,7 +1110,7 @@ ghostBookshelf.Model = ghostBookshelf.Model.extend({
         }
 
         // Some keywords cannot be changed
-        const slugList = _.union(config.get('slugs').reserved, urlService.utils.getProtectedSlugs());
+        const slugList = _.union(config.get('slugs').reserved, urlUtils.getProtectedSlugs());
         slug = _.includes(slugList, slug) ? slug + '-' + baseName : slug;
 
         // if slug is empty after trimming use the model name
@@ -1153,51 +1153,6 @@ ghostBookshelf.Model = ghostBookshelf.Model.extend({
         });
 
         return result;
-    },
-
-    /**
-     * All models which have a visibility property, can use this static helper function.
-     * Filter models by visibility.
-     *
-     * @param {Array|Object} items
-     * @param {Array} visibility
-     * @param {Boolean} [explicit]
-     * @param {Function} [fn]
-     * @returns {Array|Object} filtered items
-     */
-    filterByVisibility: function filterByVisibility(items, visibility, explicit, fn) {
-        var memo = _.isArray(items) ? [] : {};
-
-        if (_.includes(visibility, 'all')) {
-            return fn ? _.map(items, fn) : items;
-        }
-
-        // We don't want to change the structure of what is returned
-        return _.reduce(items, function (items, item, key) {
-            if (!item.visibility && !explicit || _.includes(visibility, item.visibility)) {
-                var newItem = fn ? fn(item) : item;
-                if (_.isArray(items)) {
-                    memo.push(newItem);
-                } else {
-                    memo[key] = newItem;
-                }
-            }
-            return memo;
-        }, memo);
-    },
-
-    /**
-     * Returns an Array of visibility values.
-     * e.g. public,all => ['public, 'all']
-     * @param visibility
-     * @returns {*}
-     */
-    parseVisibilityString: function parseVisibilityString(visibility) {
-        if (!visibility) {
-            return ['public'];
-        }
-
-        return _.map(visibility.split(','), _.trim);
     },
 
     /**

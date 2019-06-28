@@ -1,6 +1,6 @@
 const url = require('url');
 const settingsCache = require('../settings/cache');
-const urlService = require('../url');
+const urlUtils = require('../../lib/url-utils');
 const MembersApi = require('@tryghost/members-api');
 const MembersSSR = require('@tryghost/members-ssr');
 const common = require('../../lib/common');
@@ -110,22 +110,14 @@ function getSubscriptionSettings() {
     return membersSettings;
 }
 
-const siteUrl = urlService.utils.getSiteUrl();
+const siteUrl = urlUtils.getSiteUrl();
 const siteOrigin = doBlock(() => {
     const {protocol, host} = url.parse(siteUrl);
     return `${protocol}//${host}`;
 });
 
-const getApiUrl = ({version, type}) => {
-    const {href} = new url.URL(
-        urlService.utils.getApiPath({version, type}),
-        siteUrl
-    );
-    return href;
-};
-
-const contentApiUrl = getApiUrl({version: 'v2', type: 'content'});
-const membersApiUrl = getApiUrl({version: 'v2', type: 'members'});
+const contentApiUrl = urlUtils.urlFor('api', {version: 'v2', type: 'content'}, true);
+const membersApiUrl = urlUtils.urlFor('api', {version: 'v2', type: 'members'}, true);
 
 const accessControl = {
     [siteOrigin]: {
@@ -217,7 +209,7 @@ common.events.on('settings.edited', updateSettingFromModel);
 
 module.exports = membersApiInstance;
 module.exports.ssr = MembersSSR({
-    cookieSecure: urlService.utils.isSSL(siteUrl),
+    cookieSecure: urlUtils.isSSL(siteUrl),
     cookieKeys: [settingsCache.get('theme_session_secret')],
     membersApi: membersApiInstance
 });

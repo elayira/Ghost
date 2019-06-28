@@ -4,9 +4,10 @@ const should = require('should'),
     cheerio = require('cheerio'),
     testUtils = require('../../utils'),
     configUtils = require('../../utils/configUtils'),
+    urlUtils = require('../../utils/urlUtils'),
     appsService = require('../../../server/services/apps'),
-    settingsService = require('../../../server/services/settings'),
-    themeService = require('../../../server/services/themes'),
+    frontendSettingsService = require('../../../frontend/services/settings'),
+    themeService = require('../../../frontend/services/themes'),
     siteApp = require('../../../server/web/parent-app');
 
 describe('Integration - Web - Site', function () {
@@ -37,9 +38,12 @@ describe('Integration - Web - Site', function () {
                     });
             });
 
-            beforeEach(function () {
+            before(function () {
                 configUtils.set('url', 'http://example.com');
+                urlUtils.stubUrlUtilsFromConfig();
+            });
 
+            beforeEach(function () {
                 sinon.spy(api.posts, 'browse');
             });
 
@@ -49,6 +53,7 @@ describe('Integration - Web - Site', function () {
 
             after(function () {
                 configUtils.restore();
+                urlUtils.restore();
                 sinon.restore();
             });
 
@@ -227,8 +232,6 @@ describe('Integration - Web - Site', function () {
                 });
 
                 it('serve theme asset', function () {
-                    //configUtils.set('url', 'https://example.com');
-
                     const req = {
                         secure: true,
                         method: 'GET',
@@ -309,94 +312,96 @@ describe('Integration - Web - Site', function () {
                             });
                     });
                 });
+            });
+        });
 
-                describe('protocol', function () {
-                    it('blog is https, request is http', function () {
-                        configUtils.set('url', 'https://example.com');
+        describe('https', function () {
+            before(function () {
+                configUtils.set('url', 'https://example.com');
+                urlUtils.stubUrlUtilsFromConfig();
+            });
 
-                        const req = {
-                            secure: false,
-                            host: 'example.com',
-                            method: 'GET',
-                            url: '/html-ipsum'
-                        };
+            after(function () {
+                urlUtils.restore();
+                configUtils.restore();
+            });
 
-                        return testUtils.mocks.express.invoke(app, req)
-                            .then(function (response) {
-                                response.statusCode.should.eql(301);
-                                response.headers.location.should.eql('https://example.com/html-ipsum/');
-                            });
-                    });
+            describe('protocol', function () {
+                it('blog is https, request is http', function () {
+                    const req = {
+                        secure: false,
+                        host: 'example.com',
+                        method: 'GET',
+                        url: '/html-ipsum'
+                    };
 
-                    it('blog is https, request is http, trailing slash exists already', function () {
-                        configUtils.set('url', 'https://example.com');
-
-                        const req = {
-                            secure: false,
-                            method: 'GET',
-                            url: '/html-ipsum/',
-                            host: 'example.com'
-                        };
-
-                        return testUtils.mocks.express.invoke(app, req)
-                            .then(function (response) {
-                                response.statusCode.should.eql(301);
-                                response.headers.location.should.eql('https://example.com/html-ipsum/');
-                            });
-                    });
+                    return testUtils.mocks.express.invoke(app, req)
+                        .then(function (response) {
+                            response.statusCode.should.eql(301);
+                            response.headers.location.should.eql('https://example.com/html-ipsum/');
+                        });
                 });
 
-                describe('assets', function () {
-                    it('blog is https, request is http', function () {
-                        configUtils.set('url', 'https://example.com');
+                it('blog is https, request is http, trailing slash exists already', function () {
+                    const req = {
+                        secure: false,
+                        method: 'GET',
+                        url: '/html-ipsum/',
+                        host: 'example.com'
+                    };
 
-                        const req = {
-                            secure: false,
-                            method: 'GET',
-                            url: '/public/ghost-sdk.js',
-                            host: 'example.com'
-                        };
+                    return testUtils.mocks.express.invoke(app, req)
+                        .then(function (response) {
+                            response.statusCode.should.eql(301);
+                            response.headers.location.should.eql('https://example.com/html-ipsum/');
+                        });
+                });
+            });
 
-                        return testUtils.mocks.express.invoke(app, req)
-                            .then(function (response) {
-                                response.statusCode.should.eql(301);
-                                response.headers.location.should.eql('https://example.com/public/ghost-sdk.js');
-                            });
-                    });
+            describe('assets', function () {
+                it('blog is https, request is http', function () {
+                    const req = {
+                        secure: false,
+                        method: 'GET',
+                        url: '/public/ghost-sdk.js',
+                        host: 'example.com'
+                    };
 
-                    it('blog is https, request is http', function () {
-                        configUtils.set('url', 'https://example.com');
+                    return testUtils.mocks.express.invoke(app, req)
+                        .then(function (response) {
+                            response.statusCode.should.eql(301);
+                            response.headers.location.should.eql('https://example.com/public/ghost-sdk.js');
+                        });
+                });
 
-                        const req = {
-                            secure: false,
-                            method: 'GET',
-                            url: '/favicon.png',
-                            host: 'example.com'
-                        };
+                it('blog is https, request is http', function () {
+                    const req = {
+                        secure: false,
+                        method: 'GET',
+                        url: '/favicon.png',
+                        host: 'example.com'
+                    };
 
-                        return testUtils.mocks.express.invoke(app, req)
-                            .then(function (response) {
-                                response.statusCode.should.eql(301);
-                                response.headers.location.should.eql('https://example.com/favicon.png');
-                            });
-                    });
+                    return testUtils.mocks.express.invoke(app, req)
+                        .then(function (response) {
+                            response.statusCode.should.eql(301);
+                            response.headers.location.should.eql('https://example.com/favicon.png');
+                        });
+                });
 
-                    it('blog is https, request is http', function () {
-                        configUtils.set('url', 'https://example.com');
+                it('blog is https, request is http', function () {
+                    const req = {
+                        secure: false,
+                        method: 'GET',
+                        url: '/assets/css/main.css',
+                        host: 'example.com'
+                    };
 
-                        const req = {
-                            secure: false,
-                            method: 'GET',
-                            url: '/assets/css/main.css',
-                            host: 'example.com'
-                        };
-
-                        return testUtils.mocks.express.invoke(app, req)
-                            .then(function (response) {
-                                response.statusCode.should.eql(301);
-                                response.headers.location.should.eql('https://example.com/assets/css/main.css');
-                            });
-                    });
+                    return testUtils.mocks.express.invoke(app, req)
+                        .then(function (response) {
+                            response.statusCode.should.eql(301);
+                            response.headers.location.should.eql('https://example.com/assets/css/main.css');
+                        });
                 });
             });
         });
@@ -404,7 +409,7 @@ describe('Integration - Web - Site', function () {
         describe('extended routes.yaml: collections', function () {
             describe('2 collections', function () {
                 before(function () {
-                    sinon.stub(settingsService, 'get').returns({
+                    sinon.stub(frontendSettingsService, 'get').returns({
                         routes: {
                             '/': 'home'
                         },
@@ -446,6 +451,7 @@ describe('Integration - Web - Site', function () {
 
                 afterEach(function () {
                     configUtils.restore();
+                    urlUtils.restore();
                 });
 
                 after(function () {
@@ -537,7 +543,7 @@ describe('Integration - Web - Site', function () {
 
             describe('no collections', function () {
                 before(function () {
-                    sinon.stub(settingsService, 'get').returns({
+                    sinon.stub(frontendSettingsService, 'get').returns({
                         routes: {
                             '/test/': 'test'
                         },
@@ -564,6 +570,7 @@ describe('Integration - Web - Site', function () {
 
                 afterEach(function () {
                     configUtils.restore();
+                    urlUtils.restore();
                 });
 
                 after(function () {
@@ -588,7 +595,7 @@ describe('Integration - Web - Site', function () {
 
             describe('static permalink route', function () {
                 before(function () {
-                    sinon.stub(settingsService, 'get').returns({
+                    sinon.stub(frontendSettingsService, 'get').returns({
                         routes: {},
 
                         collections: {
@@ -624,6 +631,7 @@ describe('Integration - Web - Site', function () {
 
                 afterEach(function () {
                     configUtils.restore();
+                    urlUtils.restore();
                 });
 
                 after(function () {
@@ -694,7 +702,7 @@ describe('Integration - Web - Site', function () {
 
             describe('primary author permalink', function () {
                 before(function () {
-                    sinon.stub(settingsService, 'get').returns({
+                    sinon.stub(frontendSettingsService, 'get').returns({
                         routes: {},
 
                         collections: {
@@ -725,6 +733,7 @@ describe('Integration - Web - Site', function () {
 
                 afterEach(function () {
                     configUtils.restore();
+                    urlUtils.restore();
                 });
 
                 after(function () {
@@ -779,7 +788,7 @@ describe('Integration - Web - Site', function () {
 
             describe('primary tag permalink', function () {
                 before(function () {
-                    sinon.stub(settingsService, 'get').returns({
+                    sinon.stub(frontendSettingsService, 'get').returns({
                         routes: {},
 
                         collections: {
@@ -810,6 +819,7 @@ describe('Integration - Web - Site', function () {
 
                 afterEach(function () {
                     configUtils.restore();
+                    urlUtils.restore();
                 });
 
                 after(function () {
@@ -879,7 +889,7 @@ describe('Integration - Web - Site', function () {
 
             describe('collection with data key', function () {
                 before(function () {
-                    sinon.stub(settingsService, 'get').returns({
+                    sinon.stub(frontendSettingsService, 'get').returns({
                         routes: {},
 
                         collections: {
@@ -948,6 +958,7 @@ describe('Integration - Web - Site', function () {
 
                 afterEach(function () {
                     configUtils.restore();
+                    urlUtils.restore();
                 });
 
                 after(function () {
@@ -1017,7 +1028,7 @@ describe('Integration - Web - Site', function () {
         describe('extended routes.yaml: templates', function () {
             describe('default template, no template', function () {
                 before(function () {
-                    sinon.stub(settingsService, 'get').returns({
+                    sinon.stub(frontendSettingsService, 'get').returns({
                         routes: {},
 
                         collections: {
@@ -1050,6 +1061,7 @@ describe('Integration - Web - Site', function () {
 
                 afterEach(function () {
                     configUtils.restore();
+                    urlUtils.restore();
                 });
 
                 after(function () {
@@ -1089,7 +1101,7 @@ describe('Integration - Web - Site', function () {
 
             describe('two templates', function () {
                 before(function () {
-                    sinon.stub(settingsService, 'get').returns({
+                    sinon.stub(frontendSettingsService, 'get').returns({
                         routes: {},
 
                         collections: {
@@ -1119,6 +1131,7 @@ describe('Integration - Web - Site', function () {
 
                 afterEach(function () {
                     configUtils.restore();
+                    urlUtils.restore();
                 });
 
                 after(function () {
@@ -1143,7 +1156,7 @@ describe('Integration - Web - Site', function () {
 
             describe('home.hbs priority', function () {
                 before(function () {
-                    sinon.stub(settingsService, 'get').returns({
+                    sinon.stub(frontendSettingsService, 'get').returns({
                         routes: {},
 
                         collections: {
@@ -1177,6 +1190,7 @@ describe('Integration - Web - Site', function () {
 
                 afterEach(function () {
                     configUtils.restore();
+                    urlUtils.restore();
                 });
 
                 after(function () {
@@ -1224,7 +1238,7 @@ describe('Integration - Web - Site', function () {
                 before(function () {
                     testUtils.integrationTesting.defaultMocks(sinon, {theme: 'test-theme-channels'});
 
-                    sinon.stub(settingsService, 'get').returns({
+                    sinon.stub(frontendSettingsService, 'get').returns({
                         routes: {
                             '/channel1/': {
                                 controller: 'channel',
@@ -1382,6 +1396,7 @@ describe('Integration - Web - Site', function () {
 
                 afterEach(function () {
                     configUtils.restore();
+                    urlUtils.restore();
                 });
 
                 after(function () {
@@ -1612,7 +1627,7 @@ describe('Integration - Web - Site', function () {
 
         describe('extended routes.yaml (5): rss override', function () {
             before(function () {
-                sinon.stub(settingsService, 'get').returns({
+                sinon.stub(frontendSettingsService, 'get').returns({
                     routes: {
                         '/about/': 'about',
                         '/podcast/rss/': {
@@ -1666,6 +1681,7 @@ describe('Integration - Web - Site', function () {
 
             afterEach(function () {
                 configUtils.restore();
+                urlUtils.restore();
             });
 
             after(function () {
@@ -1785,9 +1801,13 @@ describe('Integration - Web - Site', function () {
                     });
             });
 
+            before(function () {
+                configUtils.set('url', 'http://example.com');
+                urlUtils.stubUrlUtilsFromConfig();
+            });
+
             beforeEach(function () {
                 const postsAPI = require('../../../server/api/v2/posts-public');
-                configUtils.set('url', 'http://example.com');
                 postSpy = sinon.spy(postsAPI.browse, 'query');
             });
 
@@ -1797,6 +1817,7 @@ describe('Integration - Web - Site', function () {
 
             after(function () {
                 configUtils.restore();
+                urlUtils.restore();
                 sinon.restore();
             });
 
@@ -2057,94 +2078,96 @@ describe('Integration - Web - Site', function () {
                             });
                     });
                 });
+            });
+        });
 
-                describe('protocol', function () {
-                    it('blog is https, request is http', function () {
-                        configUtils.set('url', 'https://example.com');
+        describe('https', function () {
+            before(function () {
+                configUtils.set('url', 'https://example.com');
+                urlUtils.stubUrlUtilsFromConfig();
+            });
 
-                        const req = {
-                            secure: false,
-                            host: 'example.com',
-                            method: 'GET',
-                            url: '/html-ipsum'
-                        };
+            after(function () {
+                urlUtils.restore();
+                configUtils.restore();
+            });
 
-                        return testUtils.mocks.express.invoke(app, req)
-                            .then(function (response) {
-                                response.statusCode.should.eql(301);
-                                response.headers.location.should.eql('https://example.com/html-ipsum/');
-                            });
-                    });
+            describe('protocol', function () {
+                it('blog is https, request is http', function () {
+                    const req = {
+                        secure: false,
+                        host: 'example.com',
+                        method: 'GET',
+                        url: '/html-ipsum'
+                    };
 
-                    it('blog is https, request is http, trailing slash exists already', function () {
-                        configUtils.set('url', 'https://example.com');
-
-                        const req = {
-                            secure: false,
-                            method: 'GET',
-                            url: '/html-ipsum/',
-                            host: 'example.com'
-                        };
-
-                        return testUtils.mocks.express.invoke(app, req)
-                            .then(function (response) {
-                                response.statusCode.should.eql(301);
-                                response.headers.location.should.eql('https://example.com/html-ipsum/');
-                            });
-                    });
+                    return testUtils.mocks.express.invoke(app, req)
+                        .then(function (response) {
+                            response.statusCode.should.eql(301);
+                            response.headers.location.should.eql('https://example.com/html-ipsum/');
+                        });
                 });
 
-                describe('assets', function () {
-                    it('blog is https, request is http', function () {
-                        configUtils.set('url', 'https://example.com');
+                it('blog is https, request is http, trailing slash exists already', function () {
+                    const req = {
+                        secure: false,
+                        method: 'GET',
+                        url: '/html-ipsum/',
+                        host: 'example.com'
+                    };
 
-                        const req = {
-                            secure: false,
-                            method: 'GET',
-                            url: '/public/ghost-sdk.js',
-                            host: 'example.com'
-                        };
+                    return testUtils.mocks.express.invoke(app, req)
+                        .then(function (response) {
+                            response.statusCode.should.eql(301);
+                            response.headers.location.should.eql('https://example.com/html-ipsum/');
+                        });
+                });
+            });
 
-                        return testUtils.mocks.express.invoke(app, req)
-                            .then(function (response) {
-                                response.statusCode.should.eql(301);
-                                response.headers.location.should.eql('https://example.com/public/ghost-sdk.js');
-                            });
-                    });
+            describe('assets', function () {
+                it('blog is https, request is http', function () {
+                    const req = {
+                        secure: false,
+                        method: 'GET',
+                        url: '/public/ghost-sdk.js',
+                        host: 'example.com'
+                    };
 
-                    it('blog is https, request is http', function () {
-                        configUtils.set('url', 'https://example.com');
+                    return testUtils.mocks.express.invoke(app, req)
+                        .then(function (response) {
+                            response.statusCode.should.eql(301);
+                            response.headers.location.should.eql('https://example.com/public/ghost-sdk.js');
+                        });
+                });
 
-                        const req = {
-                            secure: false,
-                            method: 'GET',
-                            url: '/favicon.png',
-                            host: 'example.com'
-                        };
+                it('blog is https, request is http', function () {
+                    const req = {
+                        secure: false,
+                        method: 'GET',
+                        url: '/favicon.png',
+                        host: 'example.com'
+                    };
 
-                        return testUtils.mocks.express.invoke(app, req)
-                            .then(function (response) {
-                                response.statusCode.should.eql(301);
-                                response.headers.location.should.eql('https://example.com/favicon.png');
-                            });
-                    });
+                    return testUtils.mocks.express.invoke(app, req)
+                        .then(function (response) {
+                            response.statusCode.should.eql(301);
+                            response.headers.location.should.eql('https://example.com/favicon.png');
+                        });
+                });
 
-                    it('blog is https, request is http', function () {
-                        configUtils.set('url', 'https://example.com');
+                it('blog is https, request is http', function () {
+                    const req = {
+                        secure: false,
+                        method: 'GET',
+                        url: '/assets/css/main.css',
+                        host: 'example.com'
+                    };
 
-                        const req = {
-                            secure: false,
-                            method: 'GET',
-                            url: '/assets/css/main.css',
-                            host: 'example.com'
-                        };
-
-                        return testUtils.mocks.express.invoke(app, req)
-                            .then(function (response) {
-                                response.statusCode.should.eql(301);
-                                response.headers.location.should.eql('https://example.com/assets/css/main.css');
-                            });
-                    });
+                    return testUtils.mocks.express.invoke(app, req)
+                        .then(function (response) {
+                            response.statusCode.should.eql(301);
+                            response.headers.location.should.eql('https://example.com/assets/css/main.css');
+                        });
                 });
             });
         });
@@ -2152,7 +2175,7 @@ describe('Integration - Web - Site', function () {
         describe('extended routes.yaml: collections', function () {
             describe('2 collections', function () {
                 before(function () {
-                    sinon.stub(settingsService, 'get').returns({
+                    sinon.stub(frontendSettingsService, 'get').returns({
                         routes: {
                             '/': 'home'
                         },
@@ -2194,6 +2217,7 @@ describe('Integration - Web - Site', function () {
 
                 afterEach(function () {
                     configUtils.restore();
+                    urlUtils.restore();
                 });
 
                 after(function () {
@@ -2285,7 +2309,7 @@ describe('Integration - Web - Site', function () {
 
             describe('no collections', function () {
                 before(function () {
-                    sinon.stub(settingsService, 'get').returns({
+                    sinon.stub(frontendSettingsService, 'get').returns({
                         routes: {
                             '/test/': 'test'
                         },
@@ -2312,6 +2336,7 @@ describe('Integration - Web - Site', function () {
 
                 afterEach(function () {
                     configUtils.restore();
+                    urlUtils.restore();
                 });
 
                 after(function () {
@@ -2336,7 +2361,7 @@ describe('Integration - Web - Site', function () {
 
             describe('static permalink route', function () {
                 before(function () {
-                    sinon.stub(settingsService, 'get').returns({
+                    sinon.stub(frontendSettingsService, 'get').returns({
                         routes: {},
 
                         collections: {
@@ -2372,6 +2397,7 @@ describe('Integration - Web - Site', function () {
 
                 afterEach(function () {
                     configUtils.restore();
+                    urlUtils.restore();
                 });
 
                 after(function () {
@@ -2442,7 +2468,7 @@ describe('Integration - Web - Site', function () {
 
             describe('primary author permalink', function () {
                 before(function () {
-                    sinon.stub(settingsService, 'get').returns({
+                    sinon.stub(frontendSettingsService, 'get').returns({
                         routes: {},
 
                         collections: {
@@ -2473,6 +2499,7 @@ describe('Integration - Web - Site', function () {
 
                 afterEach(function () {
                     configUtils.restore();
+                    urlUtils.restore();
                 });
 
                 after(function () {
@@ -2527,7 +2554,7 @@ describe('Integration - Web - Site', function () {
 
             describe('primary tag permalink', function () {
                 before(function () {
-                    sinon.stub(settingsService, 'get').returns({
+                    sinon.stub(frontendSettingsService, 'get').returns({
                         routes: {},
 
                         collections: {
@@ -2558,6 +2585,7 @@ describe('Integration - Web - Site', function () {
 
                 afterEach(function () {
                     configUtils.restore();
+                    urlUtils.restore();
                 });
 
                 after(function () {
@@ -2627,7 +2655,7 @@ describe('Integration - Web - Site', function () {
 
             describe('collection/routes with data key', function () {
                 before(function () {
-                    sinon.stub(settingsService, 'get').returns({
+                    sinon.stub(frontendSettingsService, 'get').returns({
                         routes: {
                             '/my-page/': {
                                 data: {
@@ -2714,6 +2742,7 @@ describe('Integration - Web - Site', function () {
 
                 afterEach(function () {
                     configUtils.restore();
+                    urlUtils.restore();
                 });
 
                 after(function () {
@@ -2797,7 +2826,7 @@ describe('Integration - Web - Site', function () {
         describe('extended routes.yaml: templates', function () {
             describe('default template, no template', function () {
                 before(function () {
-                    sinon.stub(settingsService, 'get').returns({
+                    sinon.stub(frontendSettingsService, 'get').returns({
                         routes: {},
 
                         collections: {
@@ -2830,6 +2859,7 @@ describe('Integration - Web - Site', function () {
 
                 afterEach(function () {
                     configUtils.restore();
+                    urlUtils.restore();
                 });
 
                 after(function () {
@@ -2869,7 +2899,7 @@ describe('Integration - Web - Site', function () {
 
             describe('two templates', function () {
                 before(function () {
-                    sinon.stub(settingsService, 'get').returns({
+                    sinon.stub(frontendSettingsService, 'get').returns({
                         routes: {},
 
                         collections: {
@@ -2899,6 +2929,7 @@ describe('Integration - Web - Site', function () {
 
                 afterEach(function () {
                     configUtils.restore();
+                    urlUtils.restore();
                 });
 
                 after(function () {
@@ -2923,7 +2954,7 @@ describe('Integration - Web - Site', function () {
 
             describe('home.hbs priority', function () {
                 before(function () {
-                    sinon.stub(settingsService, 'get').returns({
+                    sinon.stub(frontendSettingsService, 'get').returns({
                         routes: {},
 
                         collections: {
@@ -2957,6 +2988,7 @@ describe('Integration - Web - Site', function () {
 
                 afterEach(function () {
                     configUtils.restore();
+                    urlUtils.restore();
                 });
 
                 after(function () {
@@ -3004,7 +3036,7 @@ describe('Integration - Web - Site', function () {
                 before(function () {
                     testUtils.integrationTesting.defaultMocks(sinon, {theme: 'test-theme-channels'});
 
-                    sinon.stub(settingsService, 'get').returns({
+                    sinon.stub(frontendSettingsService, 'get').returns({
                         routes: {
                             '/channel1/': {
                                 controller: 'channel',
@@ -3142,6 +3174,7 @@ describe('Integration - Web - Site', function () {
 
                 afterEach(function () {
                     configUtils.restore();
+                    urlUtils.restore();
                 });
 
                 after(function () {
@@ -3338,7 +3371,7 @@ describe('Integration - Web - Site', function () {
 
         describe('extended routes.yaml (5): rss override', function () {
             before(function () {
-                sinon.stub(settingsService, 'get').returns({
+                sinon.stub(frontendSettingsService, 'get').returns({
                     routes: {
                         '/about/': 'about',
                         '/podcast/rss/': {
@@ -3392,6 +3425,7 @@ describe('Integration - Web - Site', function () {
 
             afterEach(function () {
                 configUtils.restore();
+                urlUtils.restore();
             });
 
             after(function () {

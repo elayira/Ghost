@@ -18,15 +18,17 @@ var Promise = require('bluebird'),
     schema = require('../../server/data/schema').tables,
     schemaTables = Object.keys(schema),
     models = require('../../server/models'),
-    urlService = require('../../server/services/url'),
-    routingService = require('../../server/services/routing'),
+    urlUtils = require('../../server/lib/url-utils'),
+    urlService = require('../../frontend/services/url'),
+    routingService = require('../../frontend/services/routing'),
     settingsService = require('../../server/services/settings'),
+    frontendSettingsService = require('../../frontend/services/settings'),
     settingsCache = require('../../server/services/settings/cache'),
     imageLib = require('../../server/lib/image'),
     web = require('../../server/web'),
     permissions = require('../../server/services/permissions'),
     sequence = require('../../server/lib/promise/sequence'),
-    themes = require('../../server/services/themes'),
+    themes = require('../../frontend/services/themes'),
     DataGenerator = require('./fixtures/data-generator'),
     configUtils = require('./configUtils'),
     filterData = require('./fixtures/filter-param'),
@@ -895,6 +897,9 @@ startGhost = function startGhost(options) {
                 return settingsService.init();
             })
             .then(function () {
+                return frontendSettingsService.init();
+            })
+            .then(function () {
                 return themes.init();
             })
             .then(function () {
@@ -969,7 +974,7 @@ startGhost = function startGhost(options) {
 
             if (options.subdir) {
                 parentApp = express();
-                parentApp.use(urlService.utils.getSubdir(), ghostServer.rootApp);
+                parentApp.use(urlUtils.getSubdir(), ghostServer.rootApp);
                 return ghostServer.start(parentApp);
             }
 
@@ -1108,7 +1113,7 @@ module.exports = {
             },
 
             init: function () {
-                const routes = settingsService.get('routes');
+                const routes = frontendSettingsService.get('routes');
 
                 const collectionRouter = new routingService.CollectionRouter('/', routes.collections['/']);
                 const tagRouter = new routingService.TaxonomyRouter('tag', routes.taxonomies.tag);
